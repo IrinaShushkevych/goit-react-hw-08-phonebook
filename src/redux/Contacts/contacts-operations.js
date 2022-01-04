@@ -5,6 +5,9 @@ import {
   fetchContactsError,
   fetchContactsRequest,
   fetchContactsSuccess,
+  deleteContactsRequest,
+  deleteContactsSuccess,
+  deleteContactsError,
 } from './contacts-actions'
 
 export const fetchContacts = () => async (dispatch) => {
@@ -35,5 +38,23 @@ export const addContact = (contact) => async (dispatch) => {
     if (addContact) dispatch(addContactsSuccess(addContact))
   } catch (error) {
     dispatch(addContactsError(error.message))
+  }
+}
+
+export const deleteContact = (id) => async (dispatch) => {
+  dispatch(deleteContactsRequest())
+  try {
+    const deleteContact = await fetch(
+      'https://61d437968df81200178a8b2f.mockapi.io/contacts/contacts/' + id,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    ).then((response) => response.json())
+    dispatch(deleteContactsSuccess(deleteContact))
+  } catch (error) {
+    dispatch(deleteContactsError(error.message))
   }
 }
