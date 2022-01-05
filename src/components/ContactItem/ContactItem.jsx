@@ -1,3 +1,4 @@
+//ДЗ виконала Шушкевич Ірина
 import PropTypes from 'prop-types'
 import s from './ContactItem.module.css'
 import { useDispatch } from 'react-redux'

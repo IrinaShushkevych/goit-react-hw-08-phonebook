@@ -12,7 +12,6 @@ export default function Contacts() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log('effect contacts ')
     dispatch(fetchContacts())
   }, [dispatch])
 
