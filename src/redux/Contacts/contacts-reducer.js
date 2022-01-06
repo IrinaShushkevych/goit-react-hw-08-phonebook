@@ -1,53 +1,38 @@
 //ДЗ виконала Шушкевич Ірина
-import { createReducer } from '@reduxjs/toolkit'
-import { setFilter } from './contacts-actions'
-import { fetchContacts, addContact, deleteContact } from './contacts-operations'
 
-const contacts = { items: [], filter: '', isLoading: false, errorMessage: '' }
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export const contactsReducer = createReducer(
-  { contacts },
-  {
-    [setFilter]: (state, { payload }) => {
-      state.contacts.filter = payload
-    },
-    [addContact.pending]: (state) => {
-      state.contacts.isLoading = true
-      state.contacts.errorMessage = ''
-    },
-    [addContact.fulfilled]: (state, { payload }) => {
-      state.contacts.isLoading = false
-      state.contacts.items.push(payload)
-    },
-    [addContact.rejected]: (state, { error }) => {
-      state.contacts.isLoading = true
-      state.contacts.errorMessage = error.name
-    },
-    [deleteContact.pending]: (state) => {
-      state.contacts.isLoading = true
-      state.contacts.errorMessage = ''
-    },
-    [deleteContact.fulfilled]: (state, { payload }) => {
-      state.contacts.isLoading = false
-      state.contacts.items = state.contacts.items.filter(
-        (el) => el.id !== payload.id,
-      )
-    },
-    [deleteContact.rejected]: (state, { error }) => {
-      state.contacts.isLoading = false
-      state.contacts.errorMessage = error.name
-    },
-    [fetchContacts.pending]: (state) => {
-      state.contacts.isLoading = true
-      state.errorMessage = ''
-    },
-    [fetchContacts.fulfilled]: (state, { payload }) => {
-      state.contacts.items = payload
-      state.contacts.isLoading = false
-    },
-    [fetchContacts.rejected]: (state, { error }) => {
-      state.contacts.isLoading = false
-      state.contacts.errorMessage = error.name
-    },
-  },
-)
+export const contactsReducer = createApi({
+  reducerPath: 'contacts',
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://61d437968df81200178a8b2f.mockapi.io/contacts/contacts',
+  }),
+  tagTypes: ['contacts'],
+  endpoints: (builder) => ({
+    getContacts: builder.query({
+      query: () => '/',
+      providesTags: ['contacts'],
+    }),
+    addContact: builder.mutation({
+      query: (contact) => ({
+        url: '/',
+        method: 'POST',
+        body: contact,
+      }),
+      invalidatesTags: ['contacts'],
+    }),
+    deleteContact: builder.mutation({
+      query: (id) => ({
+        url: `/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['contacts'],
+    }),
+  }),
+})
+
+export const {
+  useGetContactsQuery,
+  useAddContactMutation,
+  useDeleteContactMutation,
+} = contactsReducer

@@ -1,23 +1,21 @@
-import { useSelector } from "react-redux";
-import "./App.css";
-import Container from "./components/Container/Container";
-import Phonebook from "./components/Phonebook/Phonebook";
-import Contacts from "./components/Contacts/Contacts";
-import Filter from "./components/Filter/Filter";
-import { getCountContacts } from "./redux/Contacts/contacts-selectors";
+import { useGetContactsQuery } from './redux/Contacts/contacts-reducer'
+import './App.css'
+import Container from './components/Container/Container'
+import Phonebook from './components/Phonebook/Phonebook'
+import Contacts from './components/Contacts/Contacts'
+import Filter from './components/Filter/Filter'
 
 export default function App() {
-  const contactsCount = useSelector(getCountContacts);
-
+  const { data } = useGetContactsQuery()
   return (
     <div className="App">
       <Container title="Phonebook">
         <Phonebook />
       </Container>
       <Container title="Contacts">
-        {contactsCount >= 2 && <Filter />}
+        {data && data.length >= 2 && <Filter />}
         <Contacts />
       </Container>
     </div>
-  );
+  )
 }

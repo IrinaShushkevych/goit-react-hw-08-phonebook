@@ -1,12 +1,11 @@
 //ДЗ виконала Шушкевич Ірина
 import PropTypes from 'prop-types'
+import { useDeleteContactMutation } from '../../redux/Contacts/contacts-reducer'
 import s from './ContactItem.module.css'
-import { useDispatch } from 'react-redux'
-import { deleteContact } from '../../redux/Contacts/contacts-operations'
+import Loader from '../Loader/Loader'
 
 export default function ContactItem({ id, name, number }) {
-  const dispatch = useDispatch()
-
+  const [deleteContact, { isLoading }] = useDeleteContactMutation()
   return (
     <>
       <span className={s.itemText}>{name}</span>
@@ -16,9 +15,12 @@ export default function ContactItem({ id, name, number }) {
         className={s.button}
         data-id={id}
         onClick={() => {
-          dispatch(deleteContact(id))
+          deleteContact(id)
         }}
+        disabled={isLoading}
       >
+        {isLoading && <Loader size={15} />}
+        {/* <Loader size={15} /> */}
         Delete
       </button>
     </>

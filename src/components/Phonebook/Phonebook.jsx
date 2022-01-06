@@ -1,16 +1,16 @@
 //ДЗ виконала Шушкевич Ірина
 import { useState } from 'react'
+import {
+  useAddContactMutation,
+  useGetContactsQuery,
+} from '../../redux/Contacts/contacts-reducer'
 import s from './Phonebook.module.css'
-import { addContact } from '../../redux/Contacts/contacts-operations'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
-import { getContacts } from '../../redux/Contacts/contacts-selectors'
 
 export default function Phonebook() {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
-  const dispatch = useDispatch()
-  const contacts = useSelector(getContacts)
+  const { data: contacts } = useGetContactsQuery() //useSelector(getContacts)
+  const [addContact] = useAddContactMutation()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -18,7 +18,7 @@ export default function Phonebook() {
     if (contacts.filter((el) => el.name === name).length !== 0) {
       alert(`Contacts ${name} already exist`)
     } else {
-      dispatch(addContact(obj))
+      addContact(obj)
     }
     setName('')
     setNumber('')

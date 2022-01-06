@@ -5,6 +5,11 @@
   text-align-last: left;
 }
 
+.item {
+  display: flex;
+  align-items: center;
+}
+
 .item:not(:last-child) {
   margin-bottom: 20px;
 }
