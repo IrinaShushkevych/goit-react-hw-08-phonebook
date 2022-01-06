@@ -1,7 +1,6 @@
 //ДЗ виконала Шушкевич Ірина
 import { createReducer } from '@reduxjs/toolkit'
 import { setFilter } from './contacts-actions'
-import { current } from 'immer'
 import { fetchContacts, addContact, deleteContact } from './contacts-operations'
 
 const contacts = { items: [], filter: '', isLoading: false, errorMessage: '' }
@@ -10,105 +9,45 @@ export const contactsReducer = createReducer(
   { contacts },
   {
     [setFilter]: (state, { payload }) => {
-      const currentState = current(state)
-      return {
-        contacts: {
-          ...currentState.contacts,
-          filter: payload,
-        },
-      }
+      state.contacts.filter = payload
     },
     [addContact.pending]: (state) => {
-      const currentState = current(state)
-      return {
-        contacts: {
-          ...currentState.contacts,
-          isLoading: true,
-          errorMessage: '',
-        },
-      }
+      state.contacts.isLoading = true
+      state.contacts.errorMessage = ''
     },
     [addContact.fulfilled]: (state, { payload }) => {
-      const currentState = current(state)
-      return {
-        contacts: {
-          ...currentState.contacts,
-          items: [...currentState.contacts.items, payload],
-          isLoading: false,
-        },
-      }
+      state.contacts.isLoading = false
+      state.contacts.items.push(payload)
     },
     [addContact.rejected]: (state, { error }) => {
-      const currentState = current(state)
-      return {
-        contacts: {
-          ...currentState.contacts,
-          isLoading: false,
-          errorMessage: error.message,
-        },
-      }
+      state.contacts.isLoading = true
+      state.contacts.errorMessage = error.name
     },
     [deleteContact.pending]: (state) => {
-      const currentState = current(state)
-      return {
-        contacts: {
-          ...currentState.contacts,
-          isLoading: true,
-          errorMessage: '',
-        },
-      }
+      state.contacts.isLoading = true
+      state.contacts.errorMessage = ''
     },
     [deleteContact.fulfilled]: (state, { payload }) => {
-      const currentState = current(state)
-      return {
-        contacts: {
-          ...currentState.contacts,
-          items: [
-            ...currentState.contacts.items.filter((el) => el.id !== payload.id),
-          ],
-          isLoading: false,
-        },
-      }
+      state.contacts.isLoading = false
+      state.contacts.items = state.contacts.items.filter(
+        (el) => el.id !== payload.id,
+      )
     },
     [deleteContact.rejected]: (state, { error }) => {
-      const currentState = current(state)
-      return {
-        contacts: {
-          ...currentState.contacts,
-          isLoading: false,
-          errorMessage: error.message,
-        },
-      }
+      state.contacts.isLoading = false
+      state.contacts.errorMessage = error.name
     },
     [fetchContacts.pending]: (state) => {
-      const currentState = current(state)
-      return {
-        contacts: {
-          ...currentState.contacts,
-          isLoading: true,
-          errorMessage: '',
-        },
-      }
+      state.contacts.isLoading = true
+      state.errorMessage = ''
     },
     [fetchContacts.fulfilled]: (state, { payload }) => {
-      const currentState = current(state)
-      return {
-        contacts: {
-          ...currentState.contacts,
-          items: [...payload],
-          isLoading: false,
-        },
-      }
+      state.contacts.items = payload
+      state.contacts.isLoading = false
     },
     [fetchContacts.rejected]: (state, { error }) => {
-      const currentState = current(state)
-      return {
-        contacts: {
-          ...currentState.contacts,
-          isLoading: false,
-          errorMessage: error.message,
-        },
-      }
+      state.contacts.isLoading = false
+      state.contacts.errorMessage = error.name
     },
   },
 )
