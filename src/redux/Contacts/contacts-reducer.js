@@ -11,7 +11,13 @@ export const contactsReducer = createApi({
   endpoints: (builder) => ({
     getContacts: builder.query({
       query: () => '/',
-      providesTags: ['contacts'],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map((el) => ({ type: 'contacts', id: el.id })),
+              'contacts',
+            ]
+          : ['contacts'],
     }),
     addContact: builder.mutation({
       query: (contact) => ({
@@ -26,7 +32,19 @@ export const contactsReducer = createApi({
         url: `/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['contacts'],
+      invalidatesTags: (result) =>
+        result ? [{ type: 'contacts', id: result.id }] : ['contacts'],
+    }),
+    editContact: builder.mutation({
+      query: (contact) => ({
+        url: `/${contact.id}`,
+        method: 'PUT',
+        body: contact,
+      }),
+      invalidatesTags: (result) =>
+        result
+          ? [...result.map((el) => ({ type: 'contacts', id: el.id }))]
+          : ['contacts'],
     }),
   }),
 })
@@ -35,4 +53,5 @@ export const {
   useGetContactsQuery,
   useAddContactMutation,
   useDeleteContactMutation,
+  useEditContactMutation,
 } = contactsReducer
