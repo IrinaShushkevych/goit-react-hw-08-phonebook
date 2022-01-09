@@ -1,7 +1,10 @@
 //ДЗ виконала Шушкевич Ірина
 import PropTypes from 'prop-types'
 import { useState } from 'react'
-// import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
+import EditOffRoundedIcon from '@mui/icons-material/EditOffRounded'
+import SaveAltRoundedIcon from '@mui/icons-material/SaveAltRounded'
+import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded'
 import {
   useDeleteContactMutation,
   useEditContactMutation,
@@ -70,7 +73,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
           }}
           disabled={isLoading}
         >
-          Edit
+          <EditOffRoundedIcon fontSize="small" />
         </button>
       )}
       {isEdit && (
@@ -83,7 +86,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
           }}
           disabled={isLoading}
         >
-          Save
+          <SaveAltRoundedIcon fontSize="small" />
         </button>
       )}
       {isEdit && (
@@ -96,7 +99,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
           }}
           disabled={isLoading}
         >
-          Cancel
+          <HighlightOffRoundedIcon fontSize="small" />
         </button>
       )}
       <button
@@ -109,8 +112,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
         disabled={isLoading}
       >
         {isLoading && <Loader size={15} />}
-        {/* <DeleteForeverRoundedIcon /> */}
-        Delete
+        <DeleteForeverRoundedIcon fontSize="small" />
       </button>
     </>
   )

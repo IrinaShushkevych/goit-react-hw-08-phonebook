@@ -6,13 +6,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: auto;
-  margin-right: 10px;
+  /* margin-left: auto; */
+  margin-right: 6px;
   padding: 4px 10px;
   border: 1px solid wheat;
   border-radius: 10px;
   background-color: transparent;
   color: wheat;
+}
+
+.button:first-of-type {
+  margin-left: auto;
 }
 
 .button:hover,
