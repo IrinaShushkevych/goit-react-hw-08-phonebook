@@ -4,7 +4,7 @@ import {
   useAddContactMutation,
   useGetContactsQuery,
 } from '../../redux/Contacts/contacts-reducer'
-import { onError } from '../../utilits/messages'
+import { onError, onWarning } from '../../utilits/messages'
 import s from './Phonebook.module.css'
 
 export default function Phonebook() {
@@ -24,7 +24,7 @@ export default function Phonebook() {
       contacts.filter((el) => el.name.toLowerCase() === name.toLowerCase())
         .length !== 0
     ) {
-      alert(`Contacts ${name} already exist`)
+      onWarning(`Contacts ${name} already exist`)
     } else {
       addContact(obj)
     }
