@@ -10,7 +10,7 @@ import s from './Phonebook.module.css'
 export default function Phonebook() {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
-  const { data: contacts } = useGetContactsQuery() //useSelector(getContacts)
+  const { data: contacts } = useGetContactsQuery()
   const [addContact, { error }] = useAddContactMutation()
 
   useEffect(() => {
@@ -20,7 +20,10 @@ export default function Phonebook() {
   const handleSubmit = (e) => {
     e.preventDefault()
     const obj = { name, phone: number }
-    if (contacts.filter((el) => el.name === name).length !== 0) {
+    if (
+      contacts.filter((el) => el.name.toLowerCase() === name.toLowerCase())
+        .length !== 0
+    ) {
       alert(`Contacts ${name} already exist`)
     } else {
       addContact(obj)
