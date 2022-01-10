@@ -1,6 +1,6 @@
 //ДЗ виконала Шушкевич Ірина
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
 import EditOffRoundedIcon from '@mui/icons-material/EditOffRounded'
 import SaveAltRoundedIcon from '@mui/icons-material/SaveAltRounded'
@@ -11,13 +11,29 @@ import {
 } from '../../redux/Contacts/contacts-reducer'
 import s from './ContactItem.module.css'
 import Loader from '../Loader/Loader'
+import { onError } from '../../utilits/messages'
 
 export default function ContactItem({ id, nameContact, numberContact }) {
   const [isEdit, setIsEdit] = useState(false)
   const [name, setName] = useState(nameContact)
   const [number, setNumber] = useState(numberContact)
-  const [deleteContact, { isLoading }] = useDeleteContactMutation()
-  const [changeContact] = useEditContactMutation()
+  const [
+    deleteContact,
+    { isLoading, error: errorDelete },
+  ] = useDeleteContactMutation()
+  const [changeContact, { error: errorEdit }] = useEditContactMutation()
+
+  useEffect(() => {
+    if (errorDelete) onError(`${errorDelete.status} ${errorDelete.data.msg}`)
+  }, [errorDelete])
+
+  useEffect(() => {
+    if (errorEdit) {
+      onError(`${errorEdit.status} ${errorEdit.data.msg}`)
+      setName(nameContact)
+      setNumber(numberContact)
+    }
+  }, [errorEdit])
 
   const onChange = (isCgange) => {
     if (!isCgange) {

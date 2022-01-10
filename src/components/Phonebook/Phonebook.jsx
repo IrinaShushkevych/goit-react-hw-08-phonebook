@@ -1,16 +1,21 @@
 //ДЗ виконала Шушкевич Ірина
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   useAddContactMutation,
   useGetContactsQuery,
 } from '../../redux/Contacts/contacts-reducer'
+import { onError } from '../../utilits/messages'
 import s from './Phonebook.module.css'
 
 export default function Phonebook() {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
   const { data: contacts } = useGetContactsQuery() //useSelector(getContacts)
-  const [addContact] = useAddContactMutation()
+  const [addContact, { error }] = useAddContactMutation()
+
+  useEffect(() => {
+    if (error) onError(`${error.status} ${error.data.msg}`)
+  }, [error])
 
   const handleSubmit = (e) => {
     e.preventDefault()

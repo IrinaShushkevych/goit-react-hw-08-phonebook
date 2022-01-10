@@ -5,9 +5,15 @@ import { useSelector } from 'react-redux'
 
 import ContactItem from '../ContactItem/ContactItem'
 import Loader from '../Loader/Loader'
+import { onError } from '../../utilits/messages'
+import { useEffect } from 'react'
 
 export default function Contacts() {
   const { data, error, isFetching } = useGetContactsQuery()
+
+  useEffect(() => {
+    if (error) onError(`${error.status} ${error.data}`)
+  }, [error])
 
   const filter = useSelector(getFilter)
 
