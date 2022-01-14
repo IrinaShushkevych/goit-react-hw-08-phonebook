@@ -1,4 +1,5 @@
-//ДЗ виконала Шушкевич Ірина
+//created by Irina Shushkevych
+//https://connections-api.herokuapp.com
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 

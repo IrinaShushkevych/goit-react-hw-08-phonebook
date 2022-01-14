@@ -3,6 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query'
 import logger from 'redux-logger'
 import { contactsReducer } from './Contacts/contacts-reducer'
 import { filterReducer } from './Filter/filter-reducer'
+import { usersSlice } from './Users/users-slice'
 
 const middleware = (getDefaultMiddleware) => [
   ...getDefaultMiddleware(),
@@ -13,6 +14,7 @@ const middleware = (getDefaultMiddleware) => [
 export const store = configureStore({
   reducer: {
     [contactsReducer.reducerPath]: contactsReducer.reducer,
+    [usersSlice.name]: usersSlice.reducer,
     filter: filterReducer,
   },
   middleware,
