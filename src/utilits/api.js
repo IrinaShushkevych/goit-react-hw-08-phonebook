@@ -1,8 +1,6 @@
 const BASE_API = 'https://connections-api.herokuapp.com/users'
 
 export const registerUserAPI = (user) => {
-  console.log('API')
-  console.log(user)
   return fetch(`${BASE_API}/signup`, {
     method: 'POST',
     headers: {
@@ -10,6 +8,16 @@ export const registerUserAPI = (user) => {
     },
     body: JSON.stringify(user),
   }).then((response) => response.json())
+}
+
+export const loginUserAPI = (user) => {
+  return fetch(`${BASE_API}/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  })
 }
 
 // /signup  {name:'', email:'', password:''}
