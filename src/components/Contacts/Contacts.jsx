@@ -7,13 +7,23 @@ import ContactItem from '../ContactItem/ContactItem'
 import Loader from '../Loader/Loader'
 import { onError } from '../../utilits/messages'
 import { useEffect } from 'react'
+import { getToken } from '../../redux/Users/users-selector'
+import { useNavigate } from 'react-router-dom'
 
 export default function Contacts() {
-  const { data, error, isFetching } = useGetContactsQuery()
+  const token = useSelector(getToken)
+  const { data, error, isFetching } = useGetContactsQuery({ token })
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (error) onError(`${error.status} ${error.data}`)
   }, [error])
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/')
+    }
+  }, [token, navigate])
 
   const filter = useSelector(getFilter)
 
@@ -28,7 +38,7 @@ export default function Contacts() {
               <ContactItem
                 id={el.id}
                 nameContact={el.name}
-                numberContact={el.phone}
+                numberContact={el.number}
               />
             </li>
           ))}

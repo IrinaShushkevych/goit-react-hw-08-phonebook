@@ -8,13 +8,9 @@ export const registerUserAPI = (user) => {
     },
     body: JSON.stringify(user),
   }).then((response) => {
-    const data = response.json()
-    console.log(response)
-    console.log('API REGISTER RESPONSE ')
-    console.log(data)
     switch (response.status) {
       case 201:
-        return data
+        return response.json()
       case 400:
         throw Error('Wrong name, login or password')
       case 404:
@@ -28,7 +24,6 @@ export const registerUserAPI = (user) => {
 }
 
 export const loginUserAPI = (user) => {
-  console.log('LOGIN ', user)
   return fetch(`${BASE_API}/login`, {
     method: 'POST',
     headers: {
@@ -36,13 +31,9 @@ export const loginUserAPI = (user) => {
     },
     body: JSON.stringify(user),
   }).then((response) => {
-    const data = response.json()
-    console.log(response)
-    console.log('API RESPONSE ')
-    console.log(data)
     switch (response.status) {
-      case 201:
-        return data
+      case 200:
+        return response.json()
       case 400:
         throw Error('Wrong login or password')
       case 404:
@@ -53,20 +44,20 @@ export const loginUserAPI = (user) => {
   })
 }
 
-// /signup  {name:'', email:'', password:''}
-// 201	Пользователь создан.
-// 400	Ошибка создания пользователя.
-// 500	Ошибка сервера.
-
-// /login {email:'', password:''}
-// 200	.
-// 400	.
-
-// /logout  headers = Authorization
-//200
-//401
-//500
-
-// /current headers = Authorization
-//200
-//401
+export const logoutUserAPI = (token) => {
+  return fetch(`${BASE_API}/logout`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((response) => {
+    switch (response.status) {
+      case 200:
+        return response.json()
+      case 401:
+        throw Error('No authorization')
+      default:
+        throw Error('Unknown error')
+    }
+  })
+}

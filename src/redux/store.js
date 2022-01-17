@@ -8,13 +8,13 @@ import { usersReducer } from './Users/users-reducer'
 const middleware = (getDefaultMiddleware) => [
   ...getDefaultMiddleware(),
   contactsReducer.middleware,
-  logger,
+  process.env.NODE_ENV !== 'production' && logger,
 ]
 
 export const store = configureStore({
   reducer: {
-    [contactsReducer.reducerPath]: contactsReducer.reducer,
     users: usersReducer,
+    [contactsReducer.reducerPath]: contactsReducer.reducer,
     filter: filterReducer,
   },
   middleware,

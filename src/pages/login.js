@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Container from '../components/Container/Container'
 import { loginUser } from '../redux/Users/users-operation'
-import { getError, getIsLoading } from '../redux/Users/users-selector'
+import { getError, getIsLoading, getUser } from '../redux/Users/users-selector'
 import { useEffect, useState } from 'react'
 import { onError } from '../utilits/messages'
 
@@ -21,6 +21,7 @@ export default function LoginPage() {
   const dispatch = useDispatch()
   const isLoading = useSelector(getIsLoading)
   const userError = useSelector(getError)
+  const userName = useSelector(getUser)
 
   const onSubmit = (data) => {
     dispatch(
@@ -59,6 +60,12 @@ export default function LoginPage() {
       onError(userError)
     }
   }, [userError])
+
+  useEffect(() => {
+    if (userName) {
+      navigate('/contacts')
+    }
+  }, [userName, navigate])
 
   return (
     <Container>

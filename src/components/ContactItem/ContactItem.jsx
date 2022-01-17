@@ -12,8 +12,11 @@ import {
 import s from './ContactItem.module.css'
 import Loader from '../Loader/Loader'
 import { onError } from '../../utilits/messages'
+import { getToken } from '../../redux/Users/users-selector'
+import { useSelector } from 'react-redux'
 
 export default function ContactItem({ id, nameContact, numberContact }) {
+  const token = useSelector(getToken)
   const [isEdit, setIsEdit] = useState(false)
   const [name, setName] = useState(nameContact)
   const [number, setNumber] = useState(numberContact)
@@ -40,7 +43,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
       setName(nameContact)
       setNumber(numberContact)
     } else {
-      changeContact({ id, name, phone: number })
+      changeContact({ contact: { name, number }, id, token })
     }
     setIsEdit(false)
   }
@@ -123,7 +126,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
         className={s.button}
         data-id={id}
         onClick={() => {
-          deleteContact(id)
+          deleteContact({ id, token })
         }}
         disabled={isLoading}
       >
