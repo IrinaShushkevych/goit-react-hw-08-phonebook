@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+
 import Container from '../components/Container/Container'
-import { registerUser } from '../redux/Users/users-operation'
+import { loginUser } from '../redux/Users/users-operation'
 import { getError, getIsLoading } from '../redux/Users/users-selector'
 import { useEffect, useState } from 'react'
 import { onError } from '../utilits/messages'
@@ -23,7 +24,7 @@ export default function LoginPage() {
 
   const onSubmit = (data) => {
     dispatch(
-      registerUser({
+      loginUser({
         email: 'testtast4@gmail.com',
         password: 'qwert-11',
       }),

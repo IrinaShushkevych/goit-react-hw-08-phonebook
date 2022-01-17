@@ -7,16 +7,49 @@ export const registerUserAPI = (user) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(user),
-  }).then((response) => response.json())
+  }).then((response) => {
+    const data = response.json()
+    console.log(response)
+    console.log('API REGISTER RESPONSE ')
+    console.log(data)
+    switch (response.status) {
+      case 201:
+        return data
+      case 400:
+        throw Error('Wrong name, login or password')
+      case 404:
+        throw Error('Not found')
+      case 500:
+        throw Error('Servers error')
+      default:
+        throw Error(response.statusText)
+    }
+  })
 }
 
 export const loginUserAPI = (user) => {
+  console.log('LOGIN ', user)
   return fetch(`${BASE_API}/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(user),
+  }).then((response) => {
+    const data = response.json()
+    console.log(response)
+    console.log('API RESPONSE ')
+    console.log(data)
+    switch (response.status) {
+      case 201:
+        return data
+      case 400:
+        throw Error('Wrong login or password')
+      case 404:
+        throw Error('Not found')
+      default:
+        throw Error(response.statusText)
+    }
   })
 }
 
