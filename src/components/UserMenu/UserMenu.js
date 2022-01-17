@@ -5,9 +5,11 @@ import Container from '../Container/Container'
 import { logoutUser } from '../../redux/Users/users-operation'
 import { useEffect } from 'react'
 import { onError } from '../../utilits/messages'
+import { List } from './List.styled'
+import { Item } from './Item.styles'
 
 export default function UserMenu() {
-  const users = useSelector(getUser)
+  const userName = useSelector(getUser)
   const error = useSelector(getError)
   const token = useSelector(getToken)
   const dispatch = useDispatch()
@@ -21,31 +23,33 @@ export default function UserMenu() {
   return (
     <>
       <Container>
-        <h1>{users}</h1>
-        <ul>
-          {!users && (
+        <List>
+          {!userName && (
             <>
-              <li>
+              <Item>
                 <Link to="register">Register</Link>
-              </li>
-              <li>
+              </Item>
+              <Item>
                 <Link to="login">LogIn</Link>
-              </li>
+              </Item>
             </>
           )}
-          {users && (
-            <li>
-              <Link
-                to="/"
-                onClick={() => {
-                  dispatch(logoutUser(token))
-                }}
-              >
-                LogOut
-              </Link>
-            </li>
+          {userName && (
+            <>
+              <Item>Hello, {userName}</Item>
+              <Item>
+                <Link
+                  to="/"
+                  onClick={() => {
+                    dispatch(logoutUser(token))
+                  }}
+                >
+                  LogOut
+                </Link>
+              </Item>
+            </>
           )}
-        </ul>
+        </List>
       </Container>
       <Outlet />
     </>
