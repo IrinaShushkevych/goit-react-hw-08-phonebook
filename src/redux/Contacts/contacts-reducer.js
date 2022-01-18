@@ -1,24 +1,22 @@
 //created by Irina Shushkevych
-//https://connections-api.herokuapp.com
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const contactsReducer = createApi({
   reducerPath: 'contacts',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://connections-api.herokuapp.com/contacts',
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`)
+      }
+      return headers
+    },
   }),
   tagTypes: ['contacts'],
   endpoints: (builder) => ({
     getContacts: builder.query({
-      query: ({ token }) => {
-        return {
-          url: '/',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      },
+      query: () => '/',
       providesTags: (result) =>
         result
           ? [
@@ -28,37 +26,28 @@ export const contactsReducer = createApi({
           : ['contacts'],
     }),
     addContact: builder.mutation({
-      query: ({ contact, token }) => {
+      query: (contact) => {
         return {
           url: '/',
           method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
           body: contact,
         }
       },
       invalidatesTags: ['contacts'],
     }),
     deleteContact: builder.mutation({
-      query: ({ id, token }) => ({
+      query: (id) => ({
         url: `/${id}`,
         method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
       invalidatesTags: (result) =>
         result ? [{ type: 'contacts', id: result.id }] : ['contacts'],
     }),
     editContact: builder.mutation({
-      query: ({ contact, id, token }) => {
+      query: ({ contact, id }) => {
         return {
           url: `/${id}`,
           method: 'PATCH',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
           body: contact,
         }
       },

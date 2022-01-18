@@ -1,18 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, Outlet } from 'react-router-dom'
-import { getError, getToken, getUser } from '../../redux/Users/users-selector'
-import Container from '../Container/Container'
-import { logoutUser } from '../../redux/Users/users-operation'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { Link, Outlet } from 'react-router-dom'
+
+import { getUserName } from '../../redux/Auth/auth-selector'
+import { useLogoutUserMutation } from '../../redux/Users/users-reducer'
+import Container from '../Container/Container'
 import { onError } from '../../utilits/messages'
 import { List } from './List.styled'
 import { Item } from './Item.styles'
 
 export default function UserMenu() {
-  const userName = useSelector(getUser)
-  const error = useSelector(getError)
-  const token = useSelector(getToken)
-  const dispatch = useDispatch()
+  const userName = useSelector(getUserName)
+  const [logoutUserHook, { error }] = useLogoutUserMutation()
 
   useEffect(() => {
     if (error) {
@@ -24,7 +23,7 @@ export default function UserMenu() {
     <>
       <Container>
         <List>
-          {!userName && (
+          {!userName ? (
             <>
               <Item>
                 <Link to="register">Register</Link>
@@ -33,15 +32,14 @@ export default function UserMenu() {
                 <Link to="login">LogIn</Link>
               </Item>
             </>
-          )}
-          {userName && (
+          ) : (
             <>
               <Item>Hello, {userName}</Item>
               <Item>
                 <Link
                   to="/"
                   onClick={() => {
-                    dispatch(logoutUser(token))
+                    logoutUserHook()
                   }}
                 >
                   LogOut

@@ -7,7 +7,7 @@ import ContactItem from '../ContactItem/ContactItem'
 import Loader from '../Loader/Loader'
 import { onError } from '../../utilits/messages'
 import { useEffect } from 'react'
-import { getToken } from '../../redux/Users/users-selector'
+import { getToken } from '../../redux/Auth/auth-selector'
 import { useNavigate } from 'react-router-dom'
 
 export default function Contacts() {
