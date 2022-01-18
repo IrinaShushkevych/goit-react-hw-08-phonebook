@@ -20,12 +20,11 @@ export default function LoginUser() {
     loginUserHook,
     { isLoading, isSuccess, error },
   ] = useLoginUserMutation()
-  console.log(error)
 
   const onSubmit = async (data) => {
     loginUserHook({
       email: 'testtast4@gmail.com',
-      password: 'qwert-111',
+      password: 'qwert-11',
     })
   }
 

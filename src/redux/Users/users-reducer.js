@@ -30,63 +30,25 @@ export const usersReducer = createApi({
           body: contact,
         })
           .then((response) => {
-            console.log(response)
             if (response.error) {
               switch (response.error.status) {
                 case 400:
                   return {
                     error: { status: 400, data: 'Wrong email or passwird' },
                   }
-                // break;
+                case 404:
+                  return {
+                    error: { status: 404, data: 'Not found' },
+                  }
                 default:
                   return response.error
               }
             }
-            return response.data
+            return response
           })
-          .catch((error) => {
-            console.log(error)
-            if (error.error.status === 400)
-              return {
-                ...error,
-                error: { status: 400, data: 'Wrong email or passwird' },
-              }
-            return error
-          })
-        console.log(res)
+          .catch((error) => error)
         return res
-        // console.log(
-        //   response.ok
-        //     ? { data: await response.json() }
-        //     : { error: await response.json() },
-        // )
-        // return response.ok
-        //   ? { data: await response.json() }
-        //   : { error: await response.json() }
       },
-      // query: (contact) => ({
-      //   url: `/login`,
-      //   method: 'POST',
-      //   body: contact,
-      // }),
-      // async onQueryStarted(contact, { dispatch, queryFulfilled }) {
-      //   // `onStart` side-effect
-      //   // dispatch(messageCreated('Fetching posts...'))
-      //   console.log('starting!')
-      //   console.log(contact)
-      //   console.log(queryFulfilled)
-      //   try {
-      //     const { data } = await queryFulfilled
-      //     console.log('success!', data)
-      //     // `onSuccess` side-effect
-      //     // dispatch(messageCreated('Posts received!'))
-      //   } catch (error) {
-      //     // `onError` side-effect
-      //     // dispatch(messageCreated('Error fetching posts!'))
-      //     console.log('error... ', error)
-      //   }
-      //   console.log('END')
-      // },
       invalidatesTags: ['user'],
     }),
     logoutUser: builder.mutation({
