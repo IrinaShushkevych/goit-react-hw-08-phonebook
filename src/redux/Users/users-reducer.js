@@ -15,11 +15,34 @@ export const usersReducer = createApi({
   tagTypes: ['user'],
   endpoints: (builder) => ({
     registerUser: builder.mutation({
-      query: (contact) => ({
-        url: '/signup',
-        method: 'POST',
-        body: contact,
-      }),
+      queryFn: async (contact, queryApi, extraOptions, baseQuery) => {
+        const res = await baseQuery({
+          url: '/signup',
+          method: 'POST',
+          body: contact,
+        })
+          .then((response) => {
+            if (response.error) {
+              switch (response.error.status) {
+                case 400:
+                  return {
+                    error: { status: 400, data: 'Wrong email or passwird' },
+                  }
+                case 404:
+                  return {
+                    error: { status: 404, data: 'Not found' },
+                  }
+                case 500:
+                  return { error: { status: 500, data: 'Servers error' } }
+                default:
+                  return response.error
+              }
+            }
+            return response
+          })
+          .catch((error) => error)
+        return res
+      },
       invalidatesTags: ['user'],
     }),
     loginUser: builder.mutation({
@@ -52,10 +75,31 @@ export const usersReducer = createApi({
       invalidatesTags: ['user'],
     }),
     logoutUser: builder.mutation({
-      query: () => ({
-        url: '/logout',
-        method: 'POST',
-      }),
+      queryFn: async (arg, queryApi, extraOptions, baseQuery) => {
+        const res = await baseQuery({
+          url: '/logout',
+          method: 'POST',
+        })
+          .then((response) => {
+            if (response.error) {
+              switch (response.error.status) {
+                case 400:
+                  return {
+                    error: { status: 400, data: 'Wrong email or passwird' },
+                  }
+                case 404:
+                  return {
+                    error: { status: 404, data: 'Not found' },
+                  }
+                default:
+                  return response.error
+              }
+            }
+            return response
+          })
+          .catch((error) => error)
+        return res
+      },
     }),
   }),
 })
