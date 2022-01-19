@@ -18,7 +18,7 @@ export default function App() {
           <Route path="/" element={<UserMenu />}>
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
-            <Route path="contacts" element={<ContactsPage />} />
+            <Route path="contacts/*" element={<ContactsPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

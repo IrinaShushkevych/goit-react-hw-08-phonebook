@@ -1,3 +1,4 @@
+//created by Irina Shushkevych
 import { createReducer } from '@reduxjs/toolkit'
 import { setFilter } from './filter-actions'
 

@@ -1,3 +1,3 @@
-//ДЗ виконала Шушкевич Ірина
+//created by Irina Shushkevych
 
 export const getFilter = (state) => state.filter

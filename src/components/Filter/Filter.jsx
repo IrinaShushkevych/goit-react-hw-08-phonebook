@@ -1,3 +1,4 @@
+//created by Irina Shushkevych
 import { useSelector, useDispatch } from 'react-redux'
 import s from './Filter.module.css'
 import { setFilter } from '../../redux/Filter/filter-actions'

@@ -1,3 +1,4 @@
+//created by Irina Shushkevych
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const usersReducer = createApi({

@@ -1,3 +1,4 @@
+//created by Irina Shushkevych
 import { css } from '@emotion/react'
 import { PropTypes } from 'prop-types'
 import CircleLoader from 'react-spinners/CircleLoader'

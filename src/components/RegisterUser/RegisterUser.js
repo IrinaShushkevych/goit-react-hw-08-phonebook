@@ -1,6 +1,7 @@
+//created by Irina Shushkevych
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { onError } from '../../utilits/messages'
 import { useRegisterUserMutation } from '../../redux/Users/users-reducer'
 
@@ -15,23 +16,17 @@ export default function RegisterUser() {
     formState: { errors },
   } = useForm()
   const navigate = useNavigate()
-  const [registerUserHook, { isLoading }] = useRegisterUserMutation()
+  const [
+    registerUserHook,
+    { isLoading, error, isSuccess },
+  ] = useRegisterUserMutation()
 
   const onSubmit = async (data) => {
-    try {
-      const dataHook = registerUserHook({
-        name: 'TestTest8',
-        email: 'testtast8@gmail.com',
-        password: 'qwert-11',
-      })
-      setName('')
-      setEmail('')
-      setPassword('')
-      sessionStorage.removeItem('name')
-      sessionStorage.removeItem('email')
-    } catch (error) {
-      onError(error.message)
-    }
+    registerUserHook({
+      name,
+      email,
+      password,
+    })
   }
 
   const onCancel = () => {
@@ -58,6 +53,23 @@ export default function RegisterUser() {
         return
     }
   }
+
+  useEffect(() => {
+    if (error) {
+      onError(error.data)
+    }
+  }, [error])
+
+  useEffect(() => {
+    if (isSuccess) {
+      setName('')
+      setEmail('')
+      setPassword('')
+      sessionStorage.removeItem('name')
+      sessionStorage.removeItem('email')
+      navigate('/contacts')
+    }
+  }, [isSuccess])
 
   return (
     <>

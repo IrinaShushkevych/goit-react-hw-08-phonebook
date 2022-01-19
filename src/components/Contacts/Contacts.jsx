@@ -1,3 +1,4 @@
+//created by Irina Shushkevych
 import s from './Contacts.module.css'
 import { useGetContactsQuery } from '../../redux/Contacts/contacts-reducer'
 import { getFilter } from '../../redux/Filter/filter-selectors'

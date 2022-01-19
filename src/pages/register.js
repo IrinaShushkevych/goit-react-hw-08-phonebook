@@ -1,3 +1,4 @@
+//created by Irina Shushkevych
 import Container from '../components/Container/Container'
 import RegisterUser from '../components/RegisterUser/RegisterUser'
 

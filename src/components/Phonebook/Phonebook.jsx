@@ -1,4 +1,4 @@
-//ДЗ виконала Шушкевич Ірина
+//created by Irina Shushkevych
 import { useEffect, useState } from 'react'
 import {
   useAddContactMutation,
@@ -6,6 +6,7 @@ import {
 } from '../../redux/Contacts/contacts-reducer'
 import { onError, onWarning } from '../../utilits/messages'
 import s from './Phonebook.module.css'
+import ButtonPathClose from '../ButtonPathClose'
 
 export default function Phonebook() {
   const [name, setName] = useState('')
@@ -35,6 +36,7 @@ export default function Phonebook() {
 
   return (
     <>
+      <ButtonPathClose />
       <form className={s.mainForm} onSubmit={handleSubmit}>
         <label htmlFor="name" className={s.label}>
           Name

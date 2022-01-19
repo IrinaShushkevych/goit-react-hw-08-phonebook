@@ -1,24 +1,25 @@
-import { toast } from "react-toastify";
+//created by Irina Shushkevych
+import { toast } from 'react-toastify'
 
 const option = {
-  position: "top-right",
+  position: 'top-right',
   autoClose: 5000,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,
   draggable: true,
   progress: undefined,
-  theme: "dark",
-};
+  theme: 'dark',
+}
 
 export const onError = (message) => {
-  toast.error(message, option);
-};
+  toast.error(message, option)
+}
 
 export const onWarning = (message) => {
-  toast.warn(message, option);
-};
+  toast.warn(message, option)
+}
 
 export const onSuccess = (message) => {
-  toast.success(message, option);
-};
+  toast.success(message, option)
+}

@@ -1,3 +1,4 @@
+//created by Irina Shushkevych
 import { createSlice } from '@reduxjs/toolkit'
 import { usersReducer } from '../Users/users-reducer'
 

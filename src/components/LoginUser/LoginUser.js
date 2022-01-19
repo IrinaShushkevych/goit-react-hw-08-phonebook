@@ -1,9 +1,14 @@
+//created by Irina Shushkevych
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { onError } from '../../utilits/messages'
 import { useLoginUserMutation } from '../../redux/Users/users-reducer'
+import { Form } from '../FormStyle/Form.styled'
+import { Label } from '../FormStyle/Label.styled'
+import { Input } from '../FormStyle/Input.styled'
+import { Placeholder } from '../FormStyle/Placeholder.styled'
 
 export default function LoginUser() {
   const [email, setEmail] = useState(localStorage.getItem('email') ?? '')
@@ -22,10 +27,7 @@ export default function LoginUser() {
   ] = useLoginUserMutation()
 
   const onSubmit = async (data) => {
-    loginUserHook({
-      email: 'testtast4@gmail.com',
-      password: 'qwert-11',
-    })
+    loginUserHook({ email, password })
   }
 
   const onCancel = () => {
@@ -64,32 +66,32 @@ export default function LoginUser() {
   return (
     <>
       {isLoading && <h3>Loading....</h3>}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>
-          email
-          <input
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Label>
+          <Input
             type="email"
             {...register('email', { required: true })}
             onChange={onChange}
             value={email}
           />
+          <Placeholder>E-mail</Placeholder>
           {errors.email?.type === 'required' && 'Email is required'}
-        </label>
-        <label>
-          password
-          <input
+        </Label>
+        <Label>
+          <Input
             type="password"
             {...register('password', { required: true })}
             onChange={onChange}
             value={password}
           />
+          <Placeholder>Password</Placeholder>
           {errors.password?.type === 'required' && 'Password is required'}
-        </label>
+        </Label>
         <button type="button" onClick={onCancel}>
           Cancel
         </button>
         <button type="submit">Log in</button>
-      </form>
+      </Form>
     </>
   )
 }
