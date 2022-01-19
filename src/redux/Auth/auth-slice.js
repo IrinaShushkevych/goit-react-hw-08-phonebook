@@ -22,7 +22,7 @@ export const authSlice = createSlice({
     )
     builder.addMatcher(
       usersReducer.endpoints.logoutUser.matchFulfilled,
-      (state, { payload }) => {
+      (state) => {
         state.token = null
         state.user = null
       },

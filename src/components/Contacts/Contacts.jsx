@@ -20,11 +20,18 @@ export default function Contacts() {
     if (error) onError(`${error.status} ${error.data}`)
   }, [error])
 
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate('/')
+  //   }
+  // }, [token, navigate])
+
   useEffect(() => {
-    if (!token) {
-      navigate('/')
+    console.log('did mount')
+    return () => {
+      console.log('unmount')
     }
-  }, [token, navigate])
+  }, [])
 
   const filter = useSelector(getFilter)
 

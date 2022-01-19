@@ -30,7 +30,7 @@ export default function LoginUser() {
 
   const onSubmit = (data) => {
     console.log(JSON.stringify(data))
-    // loginUserHook({ email, password })
+    loginUserHook({ email, password })
   }
 
   const onCancel = () => {
