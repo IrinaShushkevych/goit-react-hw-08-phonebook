@@ -1,6 +1,6 @@
 //created by Irina Shushkevych
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { onError } from '../../utilits/messages'
@@ -19,6 +19,7 @@ export default function LoginUser() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm()
   const navigate = useNavigate()
@@ -29,6 +30,7 @@ export default function LoginUser() {
   ] = useLoginUserMutation()
 
   const onSubmit = (data) => {
+    console.log('FORM----------------------------------')
     console.log(JSON.stringify(data))
     loginUserHook({ email, password })
   }
@@ -42,10 +44,12 @@ export default function LoginUser() {
     switch (e.target.name) {
       case 'email':
         setEmail(value)
+        setValue('email', value)
         localStorage.setItem('email', value)
         break
       case 'password':
         setPassword(value)
+        setValue('password', value)
         break
       default:
         return
@@ -66,17 +70,16 @@ export default function LoginUser() {
     }
   }, [isSuccess, navigate])
 
-  console.log('ERROR FORM', errors)
-  console.log(errors?.password?.type)
-
   return (
     <>
       {isLoading && <h3>Loading....</h3>}
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Label>
+        <Label htmlFor="email">
           <Input
+            {...register('email', {
+              required: true,
+            })}
             type="email"
-            {...register('email', { required: true })}
             onChange={onChange}
             value={email}
             placeholder=" "
@@ -86,10 +89,10 @@ export default function LoginUser() {
             <SpanError>Email is required</SpanError>
           )}
         </Label>
-        <Label>
+        <Label htmlFor="password">
           <Input
+            {...register('password', { required: true, minLength: 6 })}
             type="password"
-            {...register('password', { required: true })}
             onChange={onChange}
             value={password}
             placeholder=" "
@@ -98,11 +101,14 @@ export default function LoginUser() {
           {errors?.password?.type === 'required' && (
             <SpanError>Password is required</SpanError>
           )}
+          {errors.password?.type === 'minLength' && (
+            <SpanError>Password is short</SpanError>
+          )}
         </Label>
-        <Button type="button" onClick={onCancel} value="Cancel" />
-        {/* Cancel
-        </Button> */}
-        <Button type="submit" value="Log in" />
+        <Button type="submit">Log in</Button>
+        <Button type="button" onClick={onCancel}>
+          Cancel
+        </Button>
       </Form>
     </>
   )

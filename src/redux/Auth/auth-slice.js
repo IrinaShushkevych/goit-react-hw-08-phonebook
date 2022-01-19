@@ -11,6 +11,7 @@ export const authSlice = createSlice({
       (state, { payload }) => {
         state.token = payload.token
         state.user = payload.user
+        state.isLogged = true
       },
     )
     builder.addMatcher(
@@ -18,6 +19,7 @@ export const authSlice = createSlice({
       (state, { payload }) => {
         state.token = payload.token
         state.user = payload.user
+        state.isLogged = true
       },
     )
     builder.addMatcher(
@@ -25,6 +27,7 @@ export const authSlice = createSlice({
       (state) => {
         state.token = null
         state.user = null
+        state.isLogged = false
       },
     )
   },

@@ -16,10 +16,6 @@ export default function UserMenu() {
   const [logoutUserHook, { error }] = useLogoutUserMutation()
   const location = useLocation()
 
-  console.log(location)
-  console.log(location.pathname)
-  console.log(userName)
-
   useEffect(() => {
     if (error) {
       onError(error)

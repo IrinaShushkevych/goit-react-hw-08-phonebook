@@ -86,7 +86,7 @@ export const usersReducer = createApi({
               switch (response.error.status) {
                 case 400:
                   return {
-                    error: { status: 400, data: 'Wrong email or passwird' },
+                    error: { status: 400, data: 'Wrong email or password' },
                   }
                 case 404:
                   return {

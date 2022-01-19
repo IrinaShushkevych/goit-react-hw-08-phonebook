@@ -26,12 +26,12 @@ export default function Contacts() {
   //   }
   // }, [token, navigate])
 
-  useEffect(() => {
-    console.log('did mount')
-    return () => {
-      console.log('unmount')
-    }
-  }, [])
+  // useEffect(() => {
+  //   console.log('did mount')
+  //   return () => {
+  //     console.log('unmount')
+  //   }
+  // }, [])
 
   const filter = useSelector(getFilter)
 

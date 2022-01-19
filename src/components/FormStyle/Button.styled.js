@@ -1,7 +1,7 @@
 //created by Irina Shushkevych
 import styled from '@emotion/styled'
 
-export const Button = styled.input`
+export const Button = styled.button`
   padding: 10px;
   border: 1px solid wheat;
   border-radius: 10px;
