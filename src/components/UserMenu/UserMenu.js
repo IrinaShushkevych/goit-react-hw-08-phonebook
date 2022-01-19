@@ -18,6 +18,7 @@ export default function UserMenu() {
 
   console.log(location)
   console.log(location.pathname)
+  console.log(userName)
 
   useEffect(() => {
     if (error) {

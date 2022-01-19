@@ -1,3 +1,4 @@
+//created by Irina Shushkevych
 import styled from '@emotion/styled'
 
 export const Placeholder = styled.span`
@@ -8,15 +9,8 @@ export const Placeholder = styled.span`
   font-size: 18px;
   transition: 250ms linear;
 
-  input:focus + & {
-    bottom: 80%;
-  }
-
-  input:placeholder-shown + & {
-    background-color: red;
-  }
-
-  input:not(:placeholder-shown).input:not(:focus) + & {
+  input:focus + &,
+  input:not(:placeholder-shown) + & {
     bottom: 80%;
   }
 `

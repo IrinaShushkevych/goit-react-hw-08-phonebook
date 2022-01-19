@@ -26,7 +26,7 @@ const middleware = (getDefaultMiddleware) => [
   }),
   contactsReducer.middleware,
   usersReducer.middleware,
-  process.env.NODE_ENV !== 'production' && logger,
+  // process.env.NODE_ENV !== 'production' && logger,
 ]
 
 const persistConfig = {

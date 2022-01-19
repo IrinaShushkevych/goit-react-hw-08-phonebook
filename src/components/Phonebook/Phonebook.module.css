@@ -27,7 +27,6 @@
 
 .button:hover,
 .button:focus {
-  color: blue;
-  border-color: blue;
-  background-color: wheat;
+  color: rgb(6, 255, 247);
+  border-color: rgb(6, 255, 247);
 }
