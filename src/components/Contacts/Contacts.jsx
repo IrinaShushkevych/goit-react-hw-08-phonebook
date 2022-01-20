@@ -34,6 +34,9 @@ export default function Contacts() {
               .filter((el) =>
                 el?.name.toUpperCase().includes(filter.toUpperCase()),
               )
+              .sort((a, b) =>
+                a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
+              )
               .map((el) => (
                 <tr key={el.id} className={s.row}>
                   <ContactItem

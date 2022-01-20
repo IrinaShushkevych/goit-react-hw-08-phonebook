@@ -47,7 +47,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
 
   return (
     <>
-      <td className={s.cell} width="33%">
+      <td className={s.cell}>
         {isEdit ? (
           <input
             type="text"
@@ -65,7 +65,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
           <span className={s.itemText}>{name}</span>
         )}
       </td>
-      <td className={s.cell} width="33%">
+      <td className={s.cell}>
         {isEdit ? (
           <input
             type="tel"
@@ -83,7 +83,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
           <span className={s.itemText}>{number}</span>
         )}
       </td>
-      <td className={s.cell} width="33%">
+      <td className={s.cell}>
         {!isEdit && (
           <button
             type="button"
