@@ -81,8 +81,6 @@ export default function RegisterUser() {
     }
   }, [isSuccess])
 
-  console.log(errors)
-
   return (
     <>
       {isLoading && <h3>Loading....</h3>}

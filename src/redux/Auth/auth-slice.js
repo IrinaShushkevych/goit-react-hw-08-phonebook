@@ -1,6 +1,7 @@
 //created by Irina Shushkevych
 import { createSlice } from '@reduxjs/toolkit'
 import { usersReducer } from '../Users/users-reducer'
+import { current } from 'immer'
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -28,6 +29,13 @@ export const authSlice = createSlice({
         state.token = null
         state.user = null
         state.isLogged = false
+      },
+    )
+    builder.addMatcher(
+      usersReducer.endpoints.getUser.matchFulfilled,
+      (state, { payload }) => {
+        state.user = payload
+        state.isLogged = true
       },
     )
   },

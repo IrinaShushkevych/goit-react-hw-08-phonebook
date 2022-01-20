@@ -13,10 +13,13 @@ export const contactsReducer = createApi({
       return headers
     },
   }),
+
+  // refetchOnMountOrArgChange: true,
+  keepUnusedDataFor: 0,
   tagTypes: ['contacts'],
   endpoints: (builder) => ({
     getContacts: builder.query({
-      query: () => '/',
+      query: (...prop) => '/',
       providesTags: (result) =>
         result
           ? [
@@ -58,6 +61,9 @@ export const contactsReducer = createApi({
     }),
   }),
 })
+
+export const getContacts =
+  contactsReducer.endpoints.getContacts.useQuerySubscription
 
 export const {
   useGetContactsQuery,

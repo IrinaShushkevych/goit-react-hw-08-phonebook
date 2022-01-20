@@ -24,7 +24,7 @@ export default function UserMenu() {
 
   return (
     <>
-      <Container>
+      <Container size="full">
         <Block>
           {userName && !location.pathname.includes('add') && (
             <Link to={`${location.pathname}/add`}>Add contact</Link>

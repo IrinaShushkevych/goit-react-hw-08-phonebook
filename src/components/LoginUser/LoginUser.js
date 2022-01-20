@@ -30,8 +30,6 @@ export default function LoginUser() {
   ] = useLoginUserMutation()
 
   const onSubmit = (data) => {
-    console.log('FORM----------------------------------')
-    console.log(JSON.stringify(data))
     loginUserHook({ email, password })
   }
 

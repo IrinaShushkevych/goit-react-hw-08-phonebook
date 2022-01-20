@@ -9,13 +9,16 @@ import { persistedStore, store } from './redux/store'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { PersistGate } from 'redux-persist/integration/react'
+import ContainerPage from './components/ContainerPage/ContainerPage'
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loader={null} persistor={persistedStore}>
         <BrowserRouter>
-          <App />
+          <ContainerPage>
+            <App />
+          </ContainerPage>
         </BrowserRouter>
         <ToastContainer />
       </PersistGate>

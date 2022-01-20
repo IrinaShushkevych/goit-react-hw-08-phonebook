@@ -84,9 +84,42 @@ export const usersReducer = createApi({
           .then((response) => {
             if (response.error) {
               switch (response.error.status) {
-                case 400:
+                case 401:
                   return {
-                    error: { status: 400, data: 'Wrong email or password' },
+                    error: { status: 401, data: 'No authorization' },
+                  }
+                case 404:
+                  return {
+                    error: { status: 404, data: 'Not found' },
+                  }
+                case 500:
+                  return {
+                    error: { status: 500, data: 'Servers error' },
+                  }
+                default:
+                  return response.error
+              }
+            }
+            return response
+          })
+          .catch((error) => error)
+        return res
+      },
+    }),
+    getUser: builder.query({
+      queryFn: async (arg, queryApi, extraOptions, baseQuery) => {
+        if (!queryApi.getState().auth.token) {
+          return { data: { name: null, email: null } }
+        }
+        const res = await baseQuery({
+          url: '/current',
+        })
+          .then((response) => {
+            if (response.error) {
+              switch (response.error.status) {
+                case 401:
+                  return {
+                    error: { status: 401, data: 'No authorization' },
                   }
                 case 404:
                   return {
@@ -109,4 +142,5 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useLogoutUserMutation,
+  useGetUserQuery,
 } = usersReducer

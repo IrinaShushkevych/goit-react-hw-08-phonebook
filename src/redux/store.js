@@ -30,8 +30,9 @@ const middleware = (getDefaultMiddleware) => [
 ]
 
 const persistConfig = {
-  key: 'root',
+  key: 'auth',
   storage: storageSession,
+  whitelist: ['token'],
 }
 
 const persistedAuthReducer = persistReducer(persistConfig, authSlice.reducer)

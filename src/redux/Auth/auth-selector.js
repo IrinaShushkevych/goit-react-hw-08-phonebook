@@ -1,4 +1,6 @@
 //created by Irina Shushkevych
 export const getUserName = (state) => state?.auth?.user?.name ?? null
 
-export const getToken = (state) => state?.auth?.token ?? ''
+export const authUser = (state) => (state?.auth?.token ? true : false)
+
+export const getToken = (state) => state?.auth?.token

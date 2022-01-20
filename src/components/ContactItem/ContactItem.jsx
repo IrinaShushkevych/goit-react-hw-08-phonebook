@@ -47,89 +47,95 @@ export default function ContactItem({ id, nameContact, numberContact }) {
 
   return (
     <>
-      {isEdit ? (
-        <input
-          type="text"
-          name="name"
-          className={s.input}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          value={name}
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-          onChange={(e) => {
-            setName(e.target.value)
-          }}
-        />
-      ) : (
-        <span className={s.itemText}>{name}</span>
-      )}
-      {isEdit ? (
-        <input
-          type="tel"
-          name="number"
-          className={s.input}
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          value={number}
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-          onChange={(e) => {
-            setNumber(e.target.value)
-          }}
-        />
-      ) : (
-        <span className={s.itemText}>{number}</span>
-      )}
-      {!isEdit && (
+      <td className={s.cell} width="33%">
+        {isEdit ? (
+          <input
+            type="text"
+            name="name"
+            className={s.input}
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            value={name}
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            onChange={(e) => {
+              setName(e.target.value)
+            }}
+          />
+        ) : (
+          <span className={s.itemText}>{name}</span>
+        )}
+      </td>
+      <td className={s.cell} width="33%">
+        {isEdit ? (
+          <input
+            type="tel"
+            name="number"
+            className={s.input}
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            value={number}
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+            onChange={(e) => {
+              setNumber(e.target.value)
+            }}
+          />
+        ) : (
+          <span className={s.itemText}>{number}</span>
+        )}
+      </td>
+      <td className={s.cell} width="33%">
+        {!isEdit && (
+          <button
+            type="button"
+            className={s.button}
+            data-id={id}
+            onClick={() => {
+              setIsEdit(true)
+            }}
+            disabled={isLoading}
+          >
+            <EditOffRoundedIcon fontSize="small" />
+          </button>
+        )}
+        {isEdit && (
+          <button
+            type="button"
+            className={s.button}
+            data-id={id}
+            onClick={() => {
+              onChange(true)
+            }}
+            disabled={isLoading}
+          >
+            <SaveAltRoundedIcon fontSize="small" />
+          </button>
+        )}
+        {isEdit && (
+          <button
+            type="button"
+            className={s.button}
+            data-id={id}
+            onClick={() => {
+              onChange(false)
+            }}
+            disabled={isLoading}
+          >
+            <HighlightOffRoundedIcon fontSize="small" />
+          </button>
+        )}
         <button
           type="button"
           className={s.button}
           data-id={id}
           onClick={() => {
-            setIsEdit(true)
+            deleteContact(id)
           }}
           disabled={isLoading}
         >
-          <EditOffRoundedIcon fontSize="small" />
+          {isLoading && <Loader size={15} />}
+          <DeleteForeverRoundedIcon fontSize="small" />
         </button>
-      )}
-      {isEdit && (
-        <button
-          type="button"
-          className={s.button}
-          data-id={id}
-          onClick={() => {
-            onChange(true)
-          }}
-          disabled={isLoading}
-        >
-          <SaveAltRoundedIcon fontSize="small" />
-        </button>
-      )}
-      {isEdit && (
-        <button
-          type="button"
-          className={s.button}
-          data-id={id}
-          onClick={() => {
-            onChange(false)
-          }}
-          disabled={isLoading}
-        >
-          <HighlightOffRoundedIcon fontSize="small" />
-        </button>
-      )}
-      <button
-        type="button"
-        className={s.button}
-        data-id={id}
-        onClick={() => {
-          deleteContact(id)
-        }}
-        disabled={isLoading}
-      >
-        {isLoading && <Loader size={15} />}
-        <DeleteForeverRoundedIcon fontSize="small" />
-      </button>
+      </td>
     </>
   )
 }
