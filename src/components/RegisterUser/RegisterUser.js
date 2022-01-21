@@ -129,10 +129,10 @@ export default function RegisterUser() {
             <SpanError>Password is short</SpanError>
           )}
         </Label>
+        <Button type="submit">Register</Button>
         <Button type="button" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit">Register</Button>
       </Form>
     </>
   )
