@@ -1,33 +1,36 @@
 //created by Irina Shushkevych
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Link, Outlet } from "react-router-dom";
 
-import { getUserName } from '../../redux/Auth/auth-selector'
-import { useLogoutUserMutation } from '../../redux/Users/users-reducer'
-import Container from '../Container/Container'
-import { onError } from '../../utilits/messages'
-import { List } from './List.styled'
-import { Item } from './Item.styles'
-import { Block } from './Block.styled'
+import { getUserName } from "../../redux/Auth/auth-selector";
+import { useLogoutUserMutation } from "../../redux/Users/users-api";
+import Container from "../Container/Container";
+import { onError } from "../../utilits/messages";
+import { List } from "./List.styled";
+import { Item } from "./Item.styles";
+import { Block } from "./Block.styled";
 
 export default function UserMenu() {
-  const userName = useSelector(getUserName)
-  const [logoutUserHook, { error }] = useLogoutUserMutation()
-  const location = useLocation()
+  const userName = useSelector(getUserName);
+  const [logoutUserHook, { error }] = useLogoutUserMutation();
 
   useEffect(() => {
     if (error) {
-      onError(error)
+      onError(error);
     }
-  }, [error])
+  }, [error]);
 
   return (
     <>
       <Container size="full">
         <Block>
-          {userName && !location.pathname.includes('add') && (
-            <Link to={`${location.pathname}/add`}>Add contact</Link>
+          {userName && (
+            <>
+              <Link to="/contacts">Home</Link>
+              <Link to="/add">Add contact</Link>
+              <Link to="/groups">Groups</Link>
+            </>
           )}
           <List>
             {!userName ? (
@@ -46,7 +49,7 @@ export default function UserMenu() {
                   <Link
                     to="/"
                     onClick={() => {
-                      logoutUserHook()
+                      logoutUserHook();
                     }}
                   >
                     LogOut
@@ -59,5 +62,5 @@ export default function UserMenu() {
       </Container>
       <Outlet />
     </>
-  )
+  );
 }

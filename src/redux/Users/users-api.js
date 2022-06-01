@@ -1,25 +1,26 @@
 //created by Irina Shushkevych
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const usersReducer = createApi({
-  reducerPath: 'users',
+  reducerPath: "users",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://connections-api.herokuapp.com/users',
+    // baseUrl: "http://localhost:3001/api/auth",
+    baseUrl: "https://app-my-phonebook.herokuapp.com/api/auth",
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token
+      const token = getState().auth.token;
       if (token) {
-        headers.set('authorization', `Bearer ${token}`)
+        headers.set("authorization", `Bearer ${token}`);
       }
-      return headers
+      return headers;
     },
   }),
-  tagTypes: ['user'],
+  tagTypes: ["user"],
   endpoints: (builder) => ({
     registerUser: builder.mutation({
       queryFn: async (contact, queryApi, extraOptions, baseQuery) => {
         const res = await baseQuery({
-          url: '/signup',
-          method: 'POST',
+          url: "/signup",
+          method: "POST",
           body: contact,
         })
           .then((response) => {
@@ -27,30 +28,35 @@ export const usersReducer = createApi({
               switch (response.error.status) {
                 case 400:
                   return {
-                    error: { status: 400, data: 'Wrong email or passwird' },
-                  }
+                    error: { status: 400, data: "Wrong email or password" },
+                  };
+                case 401:
+                  return {
+                    error: { status: 401, data: "Unauthorized" },
+                  };
                 case 404:
                   return {
-                    error: { status: 404, data: 'Not found' },
-                  }
+                    error: { status: 404, data: "Not found" },
+                  };
                 case 500:
-                  return { error: { status: 500, data: 'Servers error' } }
+                  return { error: { status: 500, data: "Servers error" } };
                 default:
-                  return response.error
+                  return response.error;
               }
             }
-            return response
+            console.log(response);
+            return response;
           })
-          .catch((error) => error)
-        return res
+          .catch((error) => error);
+        return res;
       },
-      invalidatesTags: ['user'],
+      invalidatesTags: ["user"],
     }),
     loginUser: builder.mutation({
       queryFn: async (contact, queryApi, extraOptions, baseQuery) => {
         const res = await baseQuery({
-          url: `/login`,
-          method: 'POST',
+          url: `/signin`,
+          method: "POST",
           body: contact,
         })
           .then((response) => {
@@ -58,89 +64,90 @@ export const usersReducer = createApi({
               switch (response.error.status) {
                 case 400:
                   return {
-                    error: { status: 400, data: 'Wrong email or passwird' },
-                  }
+                    error: { status: 400, data: "Wrong email or passwird" },
+                  };
                 case 404:
                   return {
-                    error: { status: 404, data: 'Not found' },
-                  }
+                    error: { status: 404, data: "Not found" },
+                  };
                 default:
-                  return response.error
+                  return response.error;
               }
             }
-            return response
+            console.log(response);
+            return response;
           })
-          .catch((error) => error)
-        return res
+          .catch((error) => error);
+        return res;
       },
-      invalidatesTags: ['user'],
+      invalidatesTags: ["user"],
     }),
     logoutUser: builder.mutation({
       queryFn: async (arg, queryApi, extraOptions, baseQuery) => {
         const res = await baseQuery({
-          url: '/logout',
-          method: 'POST',
+          url: "/logout",
+          method: "GET",
         })
           .then((response) => {
             if (response.error) {
               switch (response.error.status) {
                 case 401:
                   return {
-                    error: { status: 401, data: 'No authorization' },
-                  }
+                    error: { status: 401, data: "No authorization" },
+                  };
                 case 404:
                   return {
-                    error: { status: 404, data: 'Not found' },
-                  }
+                    error: { status: 404, data: "Not found" },
+                  };
                 case 500:
                   return {
-                    error: { status: 500, data: 'Servers error' },
-                  }
+                    error: { status: 500, data: "Servers error" },
+                  };
                 default:
-                  return response.error
+                  return response.error;
               }
             }
-            return response
+            return response;
           })
-          .catch((error) => error)
-        return res
+          .catch((error) => error);
+        return res;
       },
     }),
     getUser: builder.query({
       queryFn: async (arg, queryApi, extraOptions, baseQuery) => {
         if (!queryApi.getState().auth.token) {
-          return { data: { name: null, email: null } }
+          return { data: { name: null, email: null } };
         }
         const res = await baseQuery({
-          url: '/current',
+          url: "/current",
         })
           .then((response) => {
             if (response.error) {
               switch (response.error.status) {
                 case 401:
                   return {
-                    error: { status: 401, data: 'No authorization' },
-                  }
+                    error: { status: 401, data: "No authorization" },
+                  };
                 case 404:
                   return {
-                    error: { status: 404, data: 'Not found' },
-                  }
+                    error: { status: 404, data: "Not found" },
+                  };
                 default:
-                  return response.error
+                  return response.error;
               }
             }
-            return response
+            return response;
           })
-          .catch((error) => error)
-        return res
+          .catch((error) => error);
+        return res;
       },
     }),
   }),
-})
+});
 
 export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useLogoutUserMutation,
   useGetUserQuery,
-} = usersReducer
+} = usersReducer;

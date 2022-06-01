@@ -1,0 +1,55 @@
+.block {
+  position: relative;
+  display: block;
+  font-size: 18px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.select {
+  display: block;
+  margin-top: 4px;
+  width: 100%;
+  color: wheat;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid wheat;
+  outline: none;
+  padding-left: 20px;
+}
+
+.icon {
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  color: wheat;
+  cursor: pointer;
+}
+
+.selectOption {
+  position: absolute;
+  padding: 10px 20px;
+  margin: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(84, 82, 82, 1);
+  outline: none;
+}
+
+.selectItem {
+  font-size: 14px;
+  border-bottom: 1px solid transparent;
+  transition: 250ms ease;
+}
+
+.selectItem:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.selectItem:hover,
+.selectItem:focus {
+  color: rgb(6, 255, 247);
+  border-bottom: 1px solid rgb(6, 255, 247);
+  outline: none;
+}

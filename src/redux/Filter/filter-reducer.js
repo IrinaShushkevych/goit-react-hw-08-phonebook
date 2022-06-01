@@ -1,7 +1,7 @@
 //created by Irina Shushkevych
-import { createReducer } from '@reduxjs/toolkit'
-import { setFilter } from './filter-actions'
+import { createReducer } from "@reduxjs/toolkit";
+import { setFilter } from "./filter-actions";
 
-export const filterReducer = createReducer('', {
+export const filterReducer = createReducer("", {
   [setFilter]: (_, { payload }) => payload,
-})
+});

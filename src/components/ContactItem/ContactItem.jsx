@@ -1,49 +1,47 @@
 //created by Irina Shushkevych
-import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
-import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
-import EditOffRoundedIcon from '@mui/icons-material/EditOffRounded'
-import SaveAltRoundedIcon from '@mui/icons-material/SaveAltRounded'
-import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded'
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
+import EditOffRoundedIcon from "@mui/icons-material/EditOffRounded";
+import SaveAltRoundedIcon from "@mui/icons-material/SaveAltRounded";
+import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import {
   useDeleteContactMutation,
   useEditContactMutation,
-} from '../../redux/Contacts/contacts-reducer'
-import s from './ContactItem.module.css'
-import Loader from '../Loader/Loader'
-import { onError } from '../../utilits/messages'
+} from "../../redux/Contacts/contacts-api";
+import s from "./ContactItem.module.css";
+import Loader from "../Loader/Loader";
+import { onError } from "../../utilits/messages";
 
 export default function ContactItem({ id, nameContact, numberContact }) {
-  const [isEdit, setIsEdit] = useState(false)
-  const [name, setName] = useState(nameContact)
-  const [number, setNumber] = useState(numberContact)
-  const [
-    deleteContact,
-    { isLoading, error: errorDelete },
-  ] = useDeleteContactMutation()
-  const [changeContact, { error: errorEdit }] = useEditContactMutation()
+  const [isEdit, setIsEdit] = useState(false);
+  const [name, setName] = useState(nameContact);
+  const [number, setNumber] = useState(numberContact);
+  const [deleteContact, { isLoading, error: errorDelete }] =
+    useDeleteContactMutation();
+  const [changeContact, { error: errorEdit }] = useEditContactMutation();
 
   useEffect(() => {
-    if (errorDelete) onError(`${errorDelete.status} ${errorDelete.data.msg}`)
-  }, [errorDelete])
+    if (errorDelete) onError(`${errorDelete.status} ${errorDelete.data.msg}`);
+  }, [errorDelete]);
 
   useEffect(() => {
     if (errorEdit) {
-      onError(`${errorEdit.status} ${errorEdit.data.msg}`)
-      setName(nameContact)
-      setNumber(numberContact)
+      onError(`${errorEdit.status} ${errorEdit.data.msg}`);
+      setName(nameContact);
+      setNumber(numberContact);
     }
-  }, [errorEdit])
+  }, [errorEdit]);
 
   const onChange = (isCgange) => {
     if (!isCgange) {
-      setName(nameContact)
-      setNumber(numberContact)
+      setName(nameContact);
+      setNumber(numberContact);
     } else {
-      changeContact({ contact: { name, number }, id })
+      changeContact({ contact: { name, number }, id });
     }
-    setIsEdit(false)
-  }
+    setIsEdit(false);
+  };
 
   return (
     <>
@@ -58,7 +56,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             onChange={(e) => {
-              setName(e.target.value)
+              setName(e.target.value);
             }}
           />
         ) : (
@@ -76,7 +74,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             onChange={(e) => {
-              setNumber(e.target.value)
+              setNumber(e.target.value);
             }}
           />
         ) : (
@@ -90,7 +88,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
             className={s.button}
             data-id={id}
             onClick={() => {
-              setIsEdit(true)
+              setIsEdit(true);
             }}
             disabled={isLoading}
           >
@@ -103,7 +101,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
             className={s.button}
             data-id={id}
             onClick={() => {
-              onChange(true)
+              onChange(true);
             }}
             disabled={isLoading}
           >
@@ -116,7 +114,7 @@ export default function ContactItem({ id, nameContact, numberContact }) {
             className={s.button}
             data-id={id}
             onClick={() => {
-              onChange(false)
+              onChange(false);
             }}
             disabled={isLoading}
           >
@@ -128,7 +126,8 @@ export default function ContactItem({ id, nameContact, numberContact }) {
           className={s.button}
           data-id={id}
           onClick={() => {
-            deleteContact(id)
+            console.log(id);
+            deleteContact(id);
           }}
           disabled={isLoading}
         >
@@ -137,11 +136,11 @@ export default function ContactItem({ id, nameContact, numberContact }) {
         </button>
       </td>
     </>
-  )
+  );
 }
 
 ContactItem.propTypes = {
   id: PropTypes.string.isRequired,
   nameContact: PropTypes.string.isRequired,
-  numberContact: PropTypes.string.isRequired,
-}
+  numberContact: PropTypes.string,
+};

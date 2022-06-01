@@ -1,0 +1,60 @@
+/* created by Irina Shushkevych */
+.list {
+  padding: 0;
+  margin: 0;
+  padding-left: 10px;
+  text-align-last: left;
+  padding-bottom: 30px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.item:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+}
+
+.rowHead {
+  display: flex;
+  border-bottom: 1px solid wheat;
+}
+
+.cell {
+  display: flex;
+  padding: 0;
+  width: 33%;
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+.itemColor {
+  width: 50px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px 10px;
+  border: 1px solid wheat;
+  border-radius: 10px;
+  background-color: transparent;
+  color: wheat;
+}
+
+.button:not(:last-child) {
+  margin-right: 6px;
+}
+
+.button:hover,
+.button:focus {
+  color: rgb(6, 255, 247);
+  border-color: rgb(6, 255, 247);
+}

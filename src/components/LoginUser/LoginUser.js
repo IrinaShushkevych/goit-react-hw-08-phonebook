@@ -4,7 +4,7 @@ import { useForm, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { onError } from '../../utilits/messages'
-import { useLoginUserMutation } from '../../redux/Users/users-reducer'
+import { useLoginUserMutation } from '../../redux/Users/users-api'
 import { Form } from '../FormStyle/Form.styled'
 import { Label } from '../FormStyle/Label.styled'
 import { Input } from '../FormStyle/Input.styled'
